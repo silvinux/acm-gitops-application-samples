@@ -1,0 +1,55 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: appset-bgd-ocp
+  namespace: openshift-gitops
+spec:
+  generators:
+    - matrix:
+        generators:
+          - clusterDecisionResource:
+              configMapRef: acm-placement
+              labelSelector:
+                matchLabels:
+                  cluster.open-cluster-management.io/placement: app-gitops-placement-pre
+              requeueAfterSeconds: 180
+          - list:
+              elements:
+                - env: dev-ocp
+                - env: pre-ocp
+    - matrix:
+        generators:
+          - clusterDecisionResource:
+              configMapRef: acm-placement
+              labelSelector:
+                matchLabels:
+                  cluster.open-cluster-management.io/placement: app-gitops-placement-pro
+              requeueAfterSeconds: 180
+          - list:
+              elements:
+                - env: pro-ocp
+  template:
+    metadata:
+      name: "app-bootstrap-bgd-{{ name }}-{{ env }}"
+    spec:
+      ignoreDifferences:
+        - kind: ServiceAccount
+          jsonPointers:
+            - /imagePullSecrets
+            - /secrets
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      source:
+        repoURL: "https://github.com/silvinux/bgd-acm-gitops.git"
+        targetRevision: "main"
+        path: "03-applications/bgd/overlays/{{ env }}"
+      destination:
+        namespace: "{{ env }}-bgd"
+        server: "{{ server }}"
+...

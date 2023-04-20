@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bdg-subcription-app
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: bdg-subcription-app
+  namespace: bdg-subcription-app
+spec:
+  componentKinds:
+  - group: apps.open-cluster-management.io
+    kind: Subscription
+  descriptor: {}
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - bdg-subcription-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ggithubcom-silvinux-bgd-acm-gitops-ns
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: ggithubcom-silvinux-bgd-acm-gitops
+  namespace: ggithubcom-silvinux-bgd-acm-gitops-ns
+spec:
+  type: Git
+  pathname: 'https://github.com/silvinux/bgd-acm-gitops.git'
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  annotations:
+    apps.open-cluster-management.io/git-branch: main
+    apps.open-cluster-management.io/git-path: 03-applications/bgd/base-ocp
+    apps.open-cluster-management.io/reconcile-option: merge
+  labels:
+    app: bdg-subcription-app
+  name: bdg-subcription-app-subscription-1
+  namespace: bdg-subcription-app
+spec:
+  channel: ggithubcom-silvinux-bgd-acm-gitops-ns/ggithubcom-silvinux-bgd-acm-gitops
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: bdg-subcription-app-placement-1
+  timewindow:
+    windowtype: active
+    location: "Europe/Madrid"
+    daysofweek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    hours:
+      - start: "12:00AM"
+        end: "11:30PM"
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: bdg-subcription-app
+  name: bdg-subcription-app-placement-1
+  namespace: bdg-subcription-app
+spec:
+  clusterSelector:
+    matchLabels:
+      'cluster.open-cluster-management.io/clusterset': 'clusterset1'
+...
