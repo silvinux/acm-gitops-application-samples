@@ -19,7 +19,7 @@ spec:
       imagePullSecrets:
         - name: bgd-demo-pull-secret
       containers:
-        - image: php81-bgd-alpine
+        - image: quay.io/automationiberia/php81-bgd-alpine:latest
           name: bgd
           imagePullPolicy: Always
           # env:

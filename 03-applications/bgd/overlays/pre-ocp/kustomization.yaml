@@ -18,10 +18,4 @@ patches:
 
 commonLabels:
   env: pre-ocp-bgd
-# BEGIN ANSIBLE MANAGED BLOCK pre-ocp
-images:
-  - name: php81-bgd-alpine
-    newName: <quay-registry>/automationiberia/php81-bgd-alpine
-    newTag: 9.5.0
-# END ANSIBLE MANAGED BLOCK pre-ocp
 ...

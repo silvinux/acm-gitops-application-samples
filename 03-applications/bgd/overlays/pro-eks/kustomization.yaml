@@ -17,10 +17,4 @@ patches:
       labelSelector: "app=bgd"
 commonLabels:
   env: pro-eks-bgd
-# BEGIN ANSIBLE MANAGED BLOCK pro-eks
-images:
-  - name: php81-bgd-alpine
-    newName: <quay-registry>/automationiberia/php81-bgd-alpine
-    newTag: 9.5.0
-# END ANSIBLE MANAGED BLOCK pro-eks
 ...
