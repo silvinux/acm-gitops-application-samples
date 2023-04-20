@@ -2,7 +2,7 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: app-gitops-placement-ocp-pro
+  name: app-gitops-placement-ocp-pre
   namespace: openshift-gitops
 spec:
   clusterSets:
@@ -18,5 +18,5 @@ spec:
         - key: name
           operator: "In"
           values:
-          - primary
+          - secondary
 ...
