@@ -1,0 +1,47 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: pacman-dr
+  namespace: pacman-dr
+spec:
+  componentKinds:
+  - group: apps.open-cluster-management.io
+    kind: Subscription
+  descriptor: {}
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - pacman-dr
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  annotations:
+    apps.open-cluster-management.io/git-branch: rdrtest
+    apps.open-cluster-management.io/git-path: pacman
+    apps.open-cluster-management.io/reconcile-option: merge
+  labels:
+    app: pacman-dr
+  name: pacman-dr-subscription-1
+  namespace: pacman-dr
+spec:
+  channel: ggithubcom-silvinux-application-samples-ns/ggithubcom-silvinux-application-samples
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: pacman-dr-placement-1
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: pacman-dr
+  name: pacman-dr-placement-1
+  namespace: pacman-dr
+spec:
+  clusterSelector:
+    matchLabels:
+      'name': 'primary'
+

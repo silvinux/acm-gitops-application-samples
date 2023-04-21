@@ -1,0 +1,13 @@
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: DRPolicy
+metadata:
+  labels:
+    cluster.open-cluster-management.io/backup: resource
+  name: demo-drsync2m
+spec:
+  drClusters:
+    - primary
+    - secondary
+  replicationClassSelector: {}
+  schedulingInterval: 2m
+  volumeSnapshotClassSelector: {}
