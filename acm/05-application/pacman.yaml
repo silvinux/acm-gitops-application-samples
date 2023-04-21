@@ -40,6 +40,9 @@ metadata:
     app: pacman-dr
   name: pacman-dr-placement-1
   namespace: pacman-dr
+  annotations:
+    drplacementcontrol.ramendr.openshift.io/drpc-name: pacman-dr-placement-1-drpc
+    drplacementcontrol.ramendr.openshift.io/drpc-namespace: pacman-dr
 spec:
   clusterSelector:
     matchLabels:
