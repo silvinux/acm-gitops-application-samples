@@ -1,0 +1,21 @@
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: DRPlacementControl
+metadata:
+  name: pacman-dr-placement-1-drpc
+  namespace: pacman-dr
+  labels:
+    app: pacman-dr
+    cluster.open-cluster-management.io/backup: resource
+spec:
+#  action: Relocate
+#  failoverCluster: secondary        
+  drPolicyRef:
+    name: demo-drsync2m
+  placementRef:
+    kind: PlacementRule
+    name: pacman-dr-placement-1
+    namespace: pacman-dr
+  preferredCluster: primary
+  pvcSelector:
+    matchLabels:
+      app: pacman-d
