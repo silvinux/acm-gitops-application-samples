@@ -8,7 +8,7 @@ metadata:
     cluster.open-cluster-management.io/backup: resource
 spec:
 #  action: Relocate
-#  failoverCluster: secondary        
+#  failoverCluster: secondary
   drPolicyRef:
     name: demo-drsync2m
   placementRef:
@@ -18,4 +18,4 @@ spec:
   preferredCluster: primary
   pvcSelector:
     matchLabels:
-      app: pacman-d
+      app: pacman-dr

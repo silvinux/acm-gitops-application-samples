@@ -1,0 +1,13 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: pacman-dr
+  name: pacman-dr-placement
+  namespace: pacman-dr
+spec:
+  clusterSelector:
+    matchLabels:
+      name: primary
+...

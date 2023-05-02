@@ -1,0 +1,10 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: channel-application-samples
+  namespace: pacman-dr
+spec:
+  type: Git
+  pathname: https://github.com/silvinux/application-samples.git
+...
