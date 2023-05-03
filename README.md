@@ -1,1 +1,1 @@
-# bgd-acm-gitops
+# acm-gitops-application-samples
